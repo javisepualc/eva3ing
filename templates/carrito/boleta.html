@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}Boleta Electrónica #{{ boleta.id }}{% endblock %}
+
+{% block content %}
+
+<div class="card mx-auto shadow" style="max-width: 720px;">
+    <div class="card-header bg-dark text-white text-center py-3">
+        <h2 class="h4 fw-bold mb-1"><i class="bi bi-shop text-warning me-2"></i>ALMACÉN "DONDE LA TÍA CARO"</h2>
+        <div class="small text-white-50">Pasaje Los Aromos #452, Villa San Agustín, Talca · Fono: +56 9 8452 3910</div>
+        <span class="badge bg-warning text-dark mt-2 fs-6">BOLETA DE VENTA N° {{ boleta.id }}</span>
+    </div>
+
+    <div class="card-body p-4">
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <div><strong>Fecha y Hora:</strong> {{ boleta.fecha|date:"d/m/Y H:i" }}</div>
+                <div><strong>Atendido por (Cajero):</strong> {{ boleta.usuario.username|default:"Operador de Turno" }}</div>
+            </div>
+            <div class="col-sm-6 text-sm-end">
+                <div><strong>Medio de Pago:</strong> <span class="badge bg-info text-dark">{{ boleta.get_medio_pago_display }}</span></div>
+                <div><strong>Estado:</strong> <span class="badge bg-success">Pagada</span></div>
+            </div>
+        </div>
+
+        <hr>
+
+        <h4 class="h5 fw-bold mb-3">Detalle de Productos</h4>
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio Unit.</th>
+                        <th>Cant.</th>
+                        <th>Descuento</th>
+                        <th class="text-end">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detalle in boleta.detalles.all %}
+                    <tr>
+                        <td class="fw-bold">{{ detalle.nombre_producto }}</td>
+                        <td>${{ detalle.precio_unitario|floatformat:0 }}</td>
+                        <td>{{ detalle.cantidad }}</td>
+                        <td class="text-success">
+                            {% if detalle.descuento > 0 %}-${{ detalle.descuento|floatformat:0 }}{% else %}$0{% endif %}
+                        </td>
+                        <td class="text-end fw-bold">${{ detalle.subtotal_final|floatformat:0 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-end">
+            <div class="col-md-6 text-end">
+                <div class="mb-1">Subtotal sin descuentos: <strong>${{ boleta.subtotal|floatformat:0 }}</strong></div>
+                <div class="text-success mb-1">Ahorro por Promociones: <strong>-${{ boleta.ahorro|floatformat:0 }}</strong></div>
+                <div class="fs-3 fw-bold text-success my-2">TOTAL PAGADO: ${{ boleta.total|floatformat:0 }}</div>
+                {% if boleta.medio_pago == 'efectivo' %}
+                <div class="small text-muted">
+                    Efectivo recibido: ${{ boleta.monto_pagado|floatformat:0 }} · <strong>Vuelto entregado: ${{ boleta.vuelto|floatformat:0 }}</strong>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <hr>
+
+        <p class="text-center text-muted mb-3">
+            ¡Muchas gracias por comprar en el almacén de barrio "Donde la tía Caro"!
+        </p>
+
+        <div class="d-flex flex-wrap justify-content-center gap-2">
+            <button onclick="window.print()" class="btn btn-primary btn-lg">
+                <i class="bi bi-printer-fill me-1"></i>Imprimir Ticket Térmico
+            </button>
+            <a href="{% url 'ver_carrito' %}" class="btn btn-success btn-lg">
+                <i class="bi bi-plus-circle me-1"></i>Nueva Venta en Caja
+            </a>
+            <a href="{% url 'historial_boletas' %}" class="btn btn-outline-secondary btn-lg">
+                <i class="bi bi-clock-history me-1"></i>Ver Historial
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

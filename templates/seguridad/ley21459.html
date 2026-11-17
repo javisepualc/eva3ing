@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block title %}Condiciones de Uso y Seguridad (Ley N° 21.459){% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div>
+        <h1 class="h3 fw-bold mb-1">Condiciones de Uso, Privacidad y Seguridad (Ley N° 21.459)</h1>
+        <p class="text-secondary mb-0">
+            Políticas de uso interno, control de acceso y resguardo de la información del Almacén "Donde la Tía Caro" conforme a la legislación chilena vigente.
+        </p>
+    </div>
+    <a href="{% url 'inicio' %}" class="btn btn-outline-secondary">
+        Volver al Inicio
+    </a>
+</div>
+
+<!-- 1. CONDICIONES GENERALES DE USO DEL SISTEMA -->
+<div class="card mb-4">
+    <div class="card-header py-3">
+        <h2 class="h6 fw-bold mb-0">1. Condiciones de Uso del Sistema del Almacén</h2>
+    </div>
+    <div class="card-body p-4 small text-secondary">
+        <p class="mb-2">
+            El presente sistema informático es de uso exclusivo para la administración y operación de caja del <strong>Almacén "Donde la Tía Caro"</strong> (Talca). Todo usuario que inicia sesión acepta las siguientes condiciones operativas y de resguardo legal:
+        </p>
+        <ul class="mb-0">
+            <li class="mb-1"><strong>Uso personal de credenciales:</strong> Cada cuenta de usuario es personal e intransferible. La sesión se cierra automáticamente tras 30 minutos de inactividad.</li>
+            <li class="mb-1"><strong>Separación de funciones:</strong> El perfil de <em>Cajero</em> está habilitado exclusivamente para operar la caja de ventas y consultar boletas emitidas. La modificación de precios, inventario, ofertas, gastos y balances está restringida al perfil de <em>Dueña / Administradora</em>.</li>
+            <li><strong>Registro de operaciones:</strong> Toda boleta emitida y todo gasto anotado queda vinculado al usuario que realizó la operación con fecha y hora exacta.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- 2. CUMPLIMIENTO TÉCNICO DE LA LEY N° 21.459 -->
+<div class="card mb-4">
+    <div class="card-header py-3">
+        <h2 class="h6 fw-bold mb-0">2. Medidas de Seguridad Informática acorde a la Ley N° 21.459 (Delitos Informáticos)</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Norma Legal (Ley N° 21.459)</th>
+                    <th>Riesgo Prevenido</th>
+                    <th>Resguardo Activo en el Sistema</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="fw-bold">Art. 2° – Acceso Ilícito</td>
+                    <td>Ingreso no autorizado a inventario, precios o finanzas</td>
+                    <td class="small text-secondary">
+                        Autenticación obligatoria y control de acceso por rol (<code>@login_required</code> y <code>@user_passes_test</code>) que bloquea cualquier intento de un cajero de entrar por URL a administración.
+                    </td>
+                    <td><span class="badge bg-success">Activo</span></td>
+                </tr>
+                <tr>
+                    <td class="fw-bold">Art. 2° y 5° – Resguardo de Claves</td>
+                    <td>Exposición de contraseñas almacenadas</td>
+                    <td class="small text-secondary">
+                        Cifrado unidireccional mediante algoritmo <strong>PBKDF2-SHA256</strong> (1.500.000 iteraciones con <em>salt</em> aleatorio). Ninguna contraseña se guarda ni es visible en texto plano.
+                    </td>
+                    <td><span class="badge bg-success">Activo</span></td>
+                </tr>
+                <tr>
+                    <td class="fw-bold">Art. 4° – Integridad de los Datos</td>
+                    <td>Ventas incompletas o descuadre de stock por corte de energía</td>
+                    <td class="small text-secondary">
+                        Transacciones atómicas (<code>transaction.atomic()</code> y bloqueo de fila <code>select_for_update()</code>) que aseguran que el cobro y la rebaja de stock se completen juntos o se anulen sin dañar la base de datos.
+                    </td>
+                    <td><span class="badge bg-success">Activo</span></td>
+                </tr>
+                <tr>
+                    <td class="fw-bold">Art. 4° y 7° – Prevención de Sabotaje e Inyección</td>
+                    <td>Inyección SQL en buscadores o borrado forzado (CSRF)</td>
+                    <td class="small text-secondary">
+                        Consultas parametrizadas vía ORM (inmune a inyecciones como <code>' OR 1=1 --</code>), token <strong>CSRF</strong> obligatorio en formularios y confirmación modal por método <code>POST</code> antes de eliminar.
+                    </td>
+                    <td><span class="badge bg-success">Activo</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 3. PERFILES DE ACCESO (Y VERIFICACIÓN DE CIFRADO SOLO PARA ADMINISTRADORA) -->
+<div class="card">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h2 class="h6 fw-bold mb-0">3. Perfiles de Acceso y Estándar de Cifrado</h2>
+        {% if user.is_staff or user.is_superuser %}
+            <span class="badge bg-warning">Vista de Auditoría (Administradora)</span>
+        {% endif %}
+    </div>
+    <div class="table-responsive">
+        <table class="table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Perfil del Sistema</th>
+                    <th>Módulos Habilitados</th>
+                    <th>Módulos Restringidos</th>
+                    <th>Estándar de Protección de Clave</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="fw-bold">Dueña / Administradora</td>
+                    <td class="small text-secondary">Caja de Ventas, Inventario, Ofertas, Gastos, Balance, Exportación Excel</td>
+                    <td class="small text-muted">Ninguno (Control total del almacén)</td>
+                    <td>
+                        <span class="badge bg-success">PBKDF2-SHA256</span>
+                        {% if user.is_staff or user.is_superuser %}
+                            <code class="small text-muted ms-1">pbkdf2_sha256$1500000$••••••••••••</code>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="fw-bold">Cajero de Turno</td>
+                    <td class="small text-secondary">Caja de Ventas (Mostrador) y consulta de Boletas Emitidas</td>
+                    <td class="small text-danger fw-semibold">Bloqueado en Inventario, Ofertas, Gastos y Balance</td>
+                    <td>
+                        <span class="badge bg-success">PBKDF2-SHA256</span>
+                        {% if user.is_staff or user.is_superuser %}
+                            <code class="small text-muted ms-1">pbkdf2_sha256$1500000$••••••••••••</code>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,435 @@
+[
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$BrEP6IkrOosB7JmnSmBx0P$OBRxVtPRzlAngUl7tU6NAsn+1IHvRlikfKRGBGIhako=",
+    "last_login": "2026-11-17T18:20:03.480Z",
+    "is_superuser": true,
+    "username": "admin_caro",
+    "first_name": "María Carolina",
+    "last_name": "Propietaria",
+    "email": "contacto@dondelatiacaro.cl",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-11-17T14:09:01.915Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$0jRWJqoNp6QIhPlWzhkSwR$37d55pWD4fH6zvK6y7sGB0BkLRuYfQT+RmaHVDqSgrU=",
+    "last_login": "2026-11-17T18:21:01.787Z",
+    "is_superuser": false,
+    "username": "cajero_turno",
+    "first_name": "Operador",
+    "last_name": "Caja Turno",
+    "email": "caja@dondelatiacaro.cl",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-11-17T14:09:02.321Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 1,
+  "fields": {
+    "codigo": "780100100001",
+    "nombre": "Arroz Grado 1 Tucapel 1 Kg",
+    "categoria": "abarrotes",
+    "descripcion": "Bolsa 1 Kg grano largo",
+    "precio_costo": "1050.00",
+    "precio": "1590.00",
+    "stock": 28,
+    "stock_minimo": 8
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 2,
+  "fields": {
+    "codigo": "780100100002",
+    "nombre": "Aceite Vegetal Chef 1 Litro",
+    "categoria": "abarrotes",
+    "descripcion": "Botella 1 Litro",
+    "precio_costo": "1490.00",
+    "precio": "2290.00",
+    "stock": 18,
+    "stock_minimo": 6
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 3,
+  "fields": {
+    "codigo": "780100100003",
+    "nombre": "Fideos Tallarín Lucchetti 400g",
+    "categoria": "abarrotes",
+    "descripcion": "Paquete N° 87 400g",
+    "precio_costo": "680.00",
+    "precio": "1090.00",
+    "stock": 35,
+    "stock_minimo": 10
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 4,
+  "fields": {
+    "codigo": "780100100004",
+    "nombre": "Azúcar Blanca Iansa 1 Kg",
+    "categoria": "abarrotes",
+    "descripcion": "Paquete 1 Kg",
+    "precio_costo": "920.00",
+    "precio": "1390.00",
+    "stock": 4,
+    "stock_minimo": 8
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 5,
+  "fields": {
+    "codigo": "780200200001",
+    "nombre": "Leche Entera Colun 1 Litro",
+    "categoria": "lacteos",
+    "descripcion": "Caja Tetrapak 1L",
+    "precio_costo": "890.00",
+    "precio": "1350.00",
+    "stock": 24,
+    "stock_minimo": 10
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 6,
+  "fields": {
+    "codigo": "780200200002",
+    "nombre": "Mantequilla Colun Pan 250g",
+    "categoria": "lacteos",
+    "descripcion": "Pan 250 gramos con sal",
+    "precio_costo": "1850.00",
+    "precio": "2690.00",
+    "stock": 3,
+    "stock_minimo": 6
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 7,
+  "fields": {
+    "codigo": "780200200003",
+    "nombre": "Queso Gauda Laminado 250g",
+    "categoria": "lacteos",
+    "descripcion": "Bandeja 250g",
+    "precio_costo": "1950.00",
+    "precio": "2890.00",
+    "stock": 12,
+    "stock_minimo": 5
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 8,
+  "fields": {
+    "codigo": "780300300001",
+    "nombre": "Bebida Coca-Cola Original 1.5L",
+    "categoria": "bebidas",
+    "descripcion": "Botella desechable 1.5L",
+    "precio_costo": "1350.00",
+    "precio": "2100.00",
+    "stock": 30,
+    "stock_minimo": 10
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 9,
+  "fields": {
+    "codigo": "780300300002",
+    "nombre": "Agua Mineral Cachantun 1.6L",
+    "categoria": "bebidas",
+    "descripcion": "Sin gas 1.6 Litros",
+    "precio_costo": "650.00",
+    "precio": "1200.00",
+    "stock": 21,
+    "stock_minimo": 8
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 10,
+  "fields": {
+    "codigo": "780300300003",
+    "nombre": "Néctar Watts Durazno 1.5L",
+    "categoria": "bebidas",
+    "descripcion": "Botella 1.5 Litros",
+    "precio_costo": "1100.00",
+    "precio": "1790.00",
+    "stock": 16,
+    "stock_minimo": 6
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 11,
+  "fields": {
+    "codigo": "780400400001",
+    "nombre": "Pan Hallulla Fresca (Bolsa 1 Kg)",
+    "categoria": "panaderia",
+    "descripcion": "Horneado diario local",
+    "precio_costo": "1200.00",
+    "precio": "2190.00",
+    "stock": 15,
+    "stock_minimo": 5
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 12,
+  "fields": {
+    "codigo": "780500500001",
+    "nombre": "Detergente Líquido Omo 1 Litro",
+    "categoria": "aseo",
+    "descripcion": "Recarga 1 Litro",
+    "precio_costo": "2400.00",
+    "precio": "3690.00",
+    "stock": 2,
+    "stock_minimo": 5
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 13,
+  "fields": {
+    "codigo": "780500500002",
+    "nombre": "Papel Higiénico Confort 4 Rollos",
+    "categoria": "aseo",
+    "descripcion": "Doble hoja 4 unidades",
+    "precio_costo": "1390.00",
+    "precio": "2150.00",
+    "stock": 20,
+    "stock_minimo": 6
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 14,
+  "fields": {
+    "codigo": "780600600001",
+    "nombre": "Galletas Tritón Vainilla 126g",
+    "categoria": "confites",
+    "descripcion": "Paquete individual",
+    "precio_costo": "590.00",
+    "precio": "990.00",
+    "stock": 25,
+    "stock_minimo": 8
+  }
+},
+{
+  "model": "productos.descuento",
+  "pk": 1,
+  "fields": {
+    "nombre": "Promo 3x2 en Bebidas y Aguas",
+    "tipo": "axb",
+    "porcentaje": null,
+    "lleve_a": 3,
+    "pague_b": 2,
+    "activo": true,
+    "productos": [
+      8,
+      9,
+      10
+    ]
+  }
+},
+{
+  "model": "productos.descuento",
+  "pk": 2,
+  "fields": {
+    "nombre": "15% Dcto Lácteos Seleccionados",
+    "tipo": "porcentaje",
+    "porcentaje": "15.00",
+    "lleve_a": null,
+    "pague_b": null,
+    "activo": true,
+    "productos": [
+      5,
+      7
+    ]
+  }
+},
+{
+  "model": "productos.boleta",
+  "pk": 1,
+  "fields": {
+    "fecha": "2026-11-17T14:09:02.736Z",
+    "usuario": 1,
+    "medio_pago": "efectivo",
+    "subtotal": "8570.00",
+    "ahorro": "405.00",
+    "total": "8165.00",
+    "monto_pagado": "10000.00",
+    "vuelto": "1835.00"
+  }
+},
+{
+  "model": "productos.boleta",
+  "pk": 2,
+  "fields": {
+    "fecha": "2026-11-17T14:09:02.744Z",
+    "usuario": 2,
+    "medio_pago": "debito",
+    "subtotal": "10790.00",
+    "ahorro": "2100.00",
+    "total": "8690.00",
+    "monto_pagado": "8690.00",
+    "vuelto": "0.00"
+  }
+},
+{
+  "model": "productos.boleta",
+  "pk": 3,
+  "fields": {
+    "fecha": "2026-11-17T18:21:22.982Z",
+    "usuario": 2,
+    "medio_pago": "efectivo",
+    "subtotal": "1200.00",
+    "ahorro": "0.00",
+    "total": "1200.00",
+    "monto_pagado": "2000.00",
+    "vuelto": "800.00"
+  }
+},
+{
+  "model": "productos.detalleboleta",
+  "pk": 1,
+  "fields": {
+    "boleta": 1,
+    "producto": 1,
+    "nombre_producto": "Arroz Grado 1 Tucapel 1 Kg",
+    "precio_unitario": "1590.00",
+    "cantidad": 2,
+    "subtotal_original": "3180.00",
+    "descuento": "0.00",
+    "subtotal_final": "3180.00"
+  }
+},
+{
+  "model": "productos.detalleboleta",
+  "pk": 2,
+  "fields": {
+    "boleta": 1,
+    "producto": 5,
+    "nombre_producto": "Leche Entera Colun 1 Litro",
+    "precio_unitario": "1350.00",
+    "cantidad": 2,
+    "subtotal_original": "2700.00",
+    "descuento": "405.00",
+    "subtotal_final": "2295.00"
+  }
+},
+{
+  "model": "productos.detalleboleta",
+  "pk": 3,
+  "fields": {
+    "boleta": 1,
+    "producto": 6,
+    "nombre_producto": "Mantequilla Colun Pan 250g",
+    "precio_unitario": "2690.00",
+    "cantidad": 1,
+    "subtotal_original": "2690.00",
+    "descuento": "0.00",
+    "subtotal_final": "2690.00"
+  }
+},
+{
+  "model": "productos.detalleboleta",
+  "pk": 4,
+  "fields": {
+    "boleta": 2,
+    "producto": 8,
+    "nombre_producto": "Bebida Coca-Cola Original 1.5L",
+    "precio_unitario": "2100.00",
+    "cantidad": 3,
+    "subtotal_original": "6300.00",
+    "descuento": "2100.00",
+    "subtotal_final": "4200.00"
+  }
+},
+{
+  "model": "productos.detalleboleta",
+  "pk": 5,
+  "fields": {
+    "boleta": 2,
+    "producto": 2,
+    "nombre_producto": "Aceite Vegetal Chef 1 Litro",
+    "precio_unitario": "2290.00",
+    "cantidad": 1,
+    "subtotal_original": "2290.00",
+    "descuento": "0.00",
+    "subtotal_final": "2290.00"
+  }
+},
+{
+  "model": "productos.detalleboleta",
+  "pk": 6,
+  "fields": {
+    "boleta": 2,
+    "producto": 11,
+    "nombre_producto": "Pan Hallulla Fresca (Bolsa 1 Kg)",
+    "precio_unitario": "2190.00",
+    "cantidad": 1,
+    "subtotal_original": "2190.00",
+    "descuento": "0.00",
+    "subtotal_final": "2190.00"
+  }
+},
+{
+  "model": "productos.detalleboleta",
+  "pk": 7,
+  "fields": {
+    "boleta": 3,
+    "producto": 9,
+    "nombre_producto": "Agua Mineral Cachantun 1.6L",
+    "precio_unitario": "1200.00",
+    "cantidad": 1,
+    "subtotal_original": "1200.00",
+    "descuento": "0.00",
+    "subtotal_final": "1200.00"
+  }
+},
+{
+  "model": "productos.gasto",
+  "pk": 1,
+  "fields": {
+    "fecha": "2026-11-17",
+    "categoria": "proveedores",
+    "tipo_comprobante": "factura",
+    "nro_comprobante": "FAC-88412",
+    "motivo": "Reposición semanal Panadería y Abarrotes Talca",
+    "monto": "4200.00",
+    "usuario": 1,
+    "creado_en": "2026-11-17T14:09:02.753Z"
+  }
+},
+{
+  "model": "productos.gasto",
+  "pk": 2,
+  "fields": {
+    "fecha": "2026-11-17",
+    "categoria": "insumos",
+    "tipo_comprobante": "boleta",
+    "nro_comprobante": "BOL-1093",
+    "motivo": "Compra de rollos de papel térmico para impresora POS y bolsas",
+    "monto": "1950.00",
+    "usuario": 1,
+    "creado_en": "2026-11-17T14:09:02.755Z"
+  }
+}
+]

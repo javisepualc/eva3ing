@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+
+<!-- CABECERA SIMPLE CON IMAGEN Y DESCRIPCIÓN CORTA -->
+<div class="hero-tiacaro mb-4">
+    <div class="row align-items-center g-4">
+        <div class="col-md-7">
+            <h1 class="h2 fw-bold mb-2">
+                Almacén "Donde la Tía Caro"
+            </h1>
+            <p class="text-secondary fs-5 mb-3">
+                Sistema de caja, control de mercadería con aviso de stock bajo y registro de gastos diarios del almacén.
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'ver_carrito' %}" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-cash-register me-2"></i>Abrir Caja
+                    </a>
+                    {% if user.is_staff or user.is_superuser %}
+                    <a href="{% url 'producto_list' %}" class="btn btn-dark btn-lg px-4">
+                        <i class="bi bi-box-seam me-2"></i>Ver Inventario
+                    </a>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-primary btn-lg px-4">
+                        Entrar a Caja
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-5 text-center">
+            <img src="{% static 'img/almacen_hero.svg' %}" alt="Almacén Donde la Tía Caro" class="img-fluid rounded" style="max-height: 195px;">
+        </div>
+    </div>
+</div>
+
+{% if not user.is_authenticated or user.is_staff or user.is_superuser %}
+<!-- RESUMEN RÁPIDO DEL DÍA (Solo visible para la Dueña) -->
+<div class="kpi-strip mb-4">
+    <div class="row g-0">
+        <div class="col-6 col-md-3 kpi-cell">
+            <div class="kpi-label">Productos</div>
+            <div class="kpi-value">{{ total_productos }}</div>
+        </div>
+        <div class="col-6 col-md-3 kpi-cell">
+            <div class="kpi-label">Por reponer</div>
+            <div class="kpi-value {% if productos_criticos > 0 %}text-brand{% endif %}">{{ productos_criticos }}</div>
+        </div>
+        <div class="col-6 col-md-3 kpi-cell">
+            <div class="kpi-label">Ventas</div>
+            <div class="kpi-value">${{ total_ventas|floatformat:0 }}</div>
+        </div>
+        <div class="col-6 col-md-3 kpi-cell">
+            <div class="kpi-label">En caja (Ventas − Gastos)</div>
+            <div class="kpi-value">${{ margen_neto|floatformat:0 }}</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- ACCESOS DIRECTOS DE TRABAJO DIARIO -->
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body p-4 d-flex justify-content-between align-items-center gap-3">
+                <div>
+                    <h2 class="h4 fw-bold mb-1">Caja de Ventas</h2>
+                    <p class="text-secondary mb-0">Cobrar productos, aplicar ofertas y dar boleta.</p>
+                </div>
+                <a href="{% url 'ver_carrito' %}" class="btn btn-primary btn-lg text-nowrap">
+                    Ir a Caja
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body p-4 d-flex justify-content-between align-items-center gap-3">
+                <div>
+                    <h2 class="h4 fw-bold mb-1">Boletas Emitidas</h2>
+                    <p class="text-secondary mb-0">Revisar ventas hechas en el turno por fecha.</p>
+                </div>
+                <a href="{% url 'historial_boletas' %}" class="btn btn-warning btn-lg text-nowrap">
+                    Ver Boletas
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% if not user.is_authenticated or user.is_staff or user.is_superuser %}
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body p-4 d-flex justify-content-between align-items-center gap-3">
+                <div>
+                    <h2 class="h4 fw-bold mb-1">Inventario y Ofertas</h2>
+                    <p class="text-secondary mb-0">Agregar mercadería, cambiar precios y ver stock bajo.</p>
+                </div>
+                <a href="{% url 'producto_list' %}" class="btn btn-dark btn-lg text-nowrap">
+                    Abrir Inventario
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body p-4 d-flex justify-content-between align-items-center gap-3">
+                <div>
+                    <h2 class="h4 fw-bold mb-1">Gastos y Balance</h2>
+                    <p class="text-secondary mb-0">Anotar pagos a repartidores y descargar Excel.</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="{% url 'gasto_list' %}" class="btn btn-warning btn-lg text-nowrap">Gastos</a>
+                    <a href="{% url 'resumen_financiero' %}" class="btn btn-warning btn-lg text-nowrap">Balance</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- DATOS DE CONTACTO DEL ALMACÉN -->
+<div class="card p-3">
+    <div class="row g-2 align-items-center small text-secondary">
+        <div class="col-md-4">
+            <strong class="text-dark">Dirección:</strong> Pasaje Los Aromos #452, Villa San Agustín, Talca
+        </div>
+        <div class="col-md-4">
+            <strong class="text-dark">Fono / WhatsApp:</strong> <span class="num">+56 9 8452 3910</span> · contacto@dondelatiacaro.cl
+        </div>
+        <div class="col-md-4 text-md-end">
+            <strong class="text-dark">Atención:</strong> Lunes a Domingo de 08:30 a 21:30 hrs
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 370" width="100%" height="100%">
+  <rect width="600" height="370" rx="12" fill="#fae5e2" stroke="#e2b6b0" stroke-width="2"/>
+  <!-- Building façade (Crema rosado colonial de pueblo chileno) -->
+  <rect x="65" y="105" width="470" height="225" rx="6" fill="#fff9f8" stroke="#241715" stroke-width="3.5"/>
+  <!-- Baseboard (Zócalo rojo colonial) -->
+  <rect x="67" y="302" width="466" height="26" fill="#b91c1c"/>
+  <!-- Traditional Red & Pinkish-Cream Striped Awning -->
+  <path d="M48 112 L552 112 L532 64 L68 64 Z" fill="#b91c1c" stroke="#241715" stroke-width="3.5"/>
+  <g stroke="#241715" stroke-width="2.5">
+    <rect x="68" y="112" width="46" height="20" rx="8" fill="#b91c1c"/>
+    <rect x="114" y="112" width="46" height="20" rx="8" fill="#fae5e2"/>
+    <rect x="160" y="112" width="46" height="20" rx="8" fill="#b91c1c"/>
+    <rect x="206" y="112" width="46" height="20" rx="8" fill="#fae5e2"/>
+    <rect x="252" y="112" width="46" height="20" rx="8" fill="#b91c1c"/>
+    <rect x="298" y="112" width="46" height="20" rx="8" fill="#fae5e2"/>
+    <rect x="344" y="112" width="46" height="20" rx="8" fill="#b91c1c"/>
+    <rect x="390" y="112" width="46" height="20" rx="8" fill="#fae5e2"/>
+    <rect x="436" y="112" width="46" height="20" rx="8" fill="#b91c1c"/>
+    <rect x="482" y="112" width="48" height="20" rx="8" fill="#fae5e2"/>
+  </g>
+  <!-- Enamel Store Signboard -->
+  <rect x="130" y="20" width="340" height="44" rx="6" fill="#b91c1c" stroke="#241715" stroke-width="3"/>
+  <rect x="136" y="25" width="328" height="34" rx="4" fill="none" stroke="#fae5e2" stroke-width="1.5"/>
+  <text x="300" y="48" font-family="Plus Jakarta Sans, Segoe UI, sans-serif" font-size="19" font-weight="800" fill="#fff9f8" text-anchor="middle" letter-spacing="1">ALMACÉN DONDE LA TÍA CARO</text>
+  <!-- Display Window -->
+  <rect x="98" y="152" width="225" height="128" rx="4" fill="#fdf3f1" stroke="#241715" stroke-width="3"/>
+  <line x1="106" y1="196" x2="315" y2="196" stroke="#846763" stroke-width="3"/>
+  <line x1="106" y1="238" x2="315" y2="238" stroke="#846763" stroke-width="3"/>
+  <!-- Groceries in warm earth, red & cream-rose tones -->
+  <rect x="122" y="166" width="24" height="28" rx="3" fill="#b91c1c"/>
+  <rect x="154" y="168" width="24" height="26" rx="3" fill="#d97706"/>
+  <rect x="188" y="164" width="28" height="30" rx="3" fill="#fae5e2" stroke="#241715" stroke-width="2"/>
+  <rect x="226" y="168" width="22" height="26" rx="3" fill="#b91c1c"/>
+  <rect x="258" y="166" width="36" height="28" rx="3" fill="#f5d5d0" stroke="#241715" stroke-width="2"/>
+  <rect x="124" y="208" width="32" height="28" rx="3" fill="#fde2dd" stroke="#241715" stroke-width="2"/>
+  <rect x="168" y="210" width="26" height="26" rx="3" fill="#b91c1c"/>
+  <rect x="204" y="206" width="28" height="30" rx="3" fill="#846763"/>
+  <rect x="244" y="210" width="48" height="26" rx="4" fill="#d97706"/>
+  <!-- Price Chalkboard beside door -->
+  <rect x="336" y="168" width="34" height="58" rx="3" fill="#241715"/>
+  <text x="353" y="186" font-family="monospace" font-size="8" font-weight="bold" fill="#fff9f8" text-anchor="middle">PAN</text>
+  <text x="353" y="200" font-family="monospace" font-size="8" font-weight="bold" fill="#fca5a5" text-anchor="middle">FRESCO</text>
+  <text x="353" y="214" font-family="monospace" font-size="8" font-weight="bold" fill="#fff9f8" text-anchor="middle">TALCA</text>
+  <!-- Store Door -->
+  <rect x="382" y="152" width="122" height="178" rx="4" fill="#fae5e2" stroke="#241715" stroke-width="3"/>
+  <rect x="396" y="166" width="94" height="78" rx="3" fill="#fff9f8" stroke="#241715" stroke-width="2"/>
+  <!-- Open Sign -->
+  <rect x="410" y="192" width="66" height="26" rx="4" fill="#b91c1c"/>
+  <text x="443" y="209" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="800" fill="#fff9f8" text-anchor="middle">ABIERTO</text>
+  <circle cx="490" cy="252" r="5" fill="#241715"/>
+  <!-- Sidewalk -->
+  <line x1="35" y1="330" x2="565" y2="330" stroke="#241715" stroke-width="4" stroke-linecap="round"/>
+</svg>

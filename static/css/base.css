@@ -1,0 +1,412 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --font-scale: 1;
+    --brand-red: #b91c1c;
+    --brand-red-dark: #991b1b;
+    --brand-red-tint: #fce8e6;
+    --brand-red-border: #f5c2be;
+    /* Paleta Crema Rosado cálido de almacén tradicional */
+    --bg-page: #fdf3f1;
+    --surface: #fff9f8;
+    --surface-subtle: #fae5e2;
+    --border-hairline: #efd2ce;
+    --border-strong: #e2b6b0;
+    --ink: #241715;
+    --ink-secondary: #5c4340;
+    --ink-muted: #846763;
+    --ok-bg: #f0fdf4;
+    --ok-text: #166534;
+    --ok-border: #bbf7d0;
+}
+
+html {
+    font-size: calc(16px * var(--font-scale));
+}
+
+body {
+    background-color: var(--bg-page);
+    color: var(--ink);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.55;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Reemplazar blancos fríos de Bootstrap por el crema rosado cálido */
+body:not(.high-contrast) .bg-white {
+    background-color: var(--surface) !important;
+}
+
+body:not(.high-contrast) .bg-light,
+body:not(.high-contrast) .table-light,
+body:not(.high-contrast) .table-light > th,
+body:not(.high-contrast) .table-light > td {
+    background-color: var(--surface-subtle) !important;
+    color: var(--ink) !important;
+}
+
+body:not(.high-contrast) .modal-content,
+body:not(.high-contrast) .list-group-item {
+    background-color: var(--surface);
+    color: var(--ink);
+    border-color: var(--border-hairline);
+}
+
+/* Números tabulares estilo caja registradora / libro contable */
+.num,
+.price,
+code,
+.table td.num,
+.table th.num {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Modo Alto Contraste para Accesibilidad Visual */
+body.high-contrast {
+    --bg-page: #000000;
+    --surface: #0a0a0a;
+    --surface-subtle: #171717;
+    --border-hairline: #ffffff;
+    --border-strong: #ffffff;
+    --ink: #ffffff;
+    --ink-secondary: #fef08a;
+    --ink-muted: #fde047;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+body.high-contrast .card,
+body.high-contrast .modal-content,
+body.high-contrast .table,
+body.high-contrast .list-group-item,
+body.high-contrast .kpi-strip {
+    background-color: #0a0a0a !important;
+    color: #ffffff !important;
+    border: 2px solid #ffffff !important;
+}
+
+body.high-contrast .table th,
+body.high-contrast .table td {
+    background-color: #0a0a0a !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+body.high-contrast .form-control,
+body.high-contrast .form-select {
+    background-color: #000000 !important;
+    color: #fef08a !important;
+    border: 2px solid #ffffff !important;
+    font-weight: 700;
+}
+
+body.high-contrast .text-muted,
+body.high-contrast .text-secondary {
+    color: #fef08a !important;
+}
+
+/* Barra superior de accesibilidad en crema rosado */
+.topbar-almacen {
+    background-color: var(--surface-subtle);
+    color: var(--ink-secondary);
+    border-bottom: 1px solid var(--border-strong);
+    font-size: 0.85rem;
+}
+
+/* Cabecera / Toldo Rojo de Almacén de Pueblo */
+.navbar-tiacaro {
+    background-color: var(--brand-red);
+    border-bottom: 3px solid var(--brand-red-dark);
+    padding: 0.65rem 0;
+}
+
+.navbar-tiacaro .navbar-brand {
+    color: var(--surface) !important;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    font-size: 1.25rem;
+}
+
+.navbar-tiacaro .brand-mark {
+    background-color: var(--surface);
+    color: var(--brand-red);
+    font-weight: 800;
+    padding: 0.2rem 0.55rem;
+    border-radius: 0.35rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+}
+
+.navbar-tiacaro .nav-link {
+    color: rgba(255, 249, 248, 0.92) !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.45rem 0.8rem !important;
+    border-radius: 0.35rem;
+}
+
+.navbar-tiacaro .nav-link:hover,
+.navbar-tiacaro .nav-link.active {
+    background-color: var(--surface);
+    color: var(--brand-red) !important;
+}
+
+/* Superficies en crema rosado con bordes de 1px */
+.card {
+    background-color: var(--surface);
+    border: 1px solid var(--border-hairline);
+    border-radius: 0.5rem;
+    box-shadow: none !important;
+}
+
+.card-header {
+    background-color: var(--surface-subtle) !important;
+    border-bottom: 1px solid var(--border-hairline) !important;
+}
+
+/* Banda única de KPIs dividida por líneas finas */
+.kpi-strip {
+    background-color: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.kpi-cell {
+    padding: 1.15rem 1.35rem;
+    border-right: 1px solid var(--border-hairline);
+}
+
+.kpi-cell:last-child {
+    border-right: none;
+}
+
+@media (max-width: 991.98px) {
+    .kpi-cell {
+        border-right: none;
+        border-bottom: 1px solid var(--border-hairline);
+    }
+}
+
+.kpi-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.kpi-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+}
+
+.kpi-value.text-brand {
+    color: var(--brand-red);
+}
+
+/* Botones sobrios: Rojo Almacén y Crema Rosado */
+.btn {
+    font-weight: 600;
+    padding: 0.55rem 1.05rem;
+    border-radius: 0.4rem;
+    box-shadow: none !important;
+}
+
+.btn-lg {
+    font-size: 1.05rem;
+    padding: 0.7rem 1.3rem;
+}
+
+.btn-primary,
+.btn-success {
+    background-color: var(--brand-red) !important;
+    border-color: var(--brand-red) !important;
+    color: var(--surface) !important;
+}
+
+.btn-primary:hover,
+.btn-success:hover {
+    background-color: var(--brand-red-dark) !important;
+    border-color: var(--brand-red-dark) !important;
+}
+
+.btn-dark {
+    background-color: var(--ink) !important;
+    border-color: var(--ink) !important;
+    color: var(--surface) !important;
+}
+
+.btn-warning,
+.btn-info,
+.btn-light {
+    background-color: var(--surface-subtle) !important;
+    border: 1px solid var(--border-strong) !important;
+    color: var(--ink) !important;
+}
+
+.btn-warning:hover,
+.btn-info:hover,
+.btn-light:hover {
+    background-color: #f5d5d0 !important;
+    color: var(--ink) !important;
+}
+
+.btn-outline-success,
+.btn-outline-primary {
+    color: var(--brand-red) !important;
+    border-color: var(--border-strong) !important;
+    background-color: var(--surface);
+}
+
+.btn-outline-success:hover,
+.btn-outline-primary:hover {
+    background-color: var(--brand-red-tint) !important;
+    border-color: var(--brand-red) !important;
+    color: var(--brand-red-dark) !important;
+}
+
+/* Tablas limpias sobre crema rosado */
+.table {
+    margin-bottom: 0;
+    color: var(--ink);
+    --bs-table-bg: var(--surface);
+    --bs-table-hover-bg: var(--surface-subtle);
+}
+
+.table thead th {
+    background-color: var(--surface-subtle) !important;
+    color: var(--ink-secondary);
+    font-size: 0.82rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-strong);
+    padding: 0.75rem 1rem;
+}
+
+.table tbody td {
+    background-color: var(--surface);
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border-hairline);
+}
+
+/* Etiquetas suaves */
+.badge {
+    font-weight: 600;
+    border-radius: 0.3rem;
+    padding: 0.35em 0.65em;
+}
+
+.badge.bg-primary,
+.badge.bg-info,
+.badge.bg-secondary,
+.badge.bg-light {
+    background-color: var(--surface-subtle) !important;
+    color: var(--ink) !important;
+    border: 1px solid var(--border-strong);
+}
+
+.badge.bg-warning {
+    background-color: #fde2dd !important;
+    color: #991b1b !important;
+    border: 1px solid #f5b9b0;
+}
+
+.badge.bg-success {
+    background-color: var(--ok-bg) !important;
+    color: var(--ok-text) !important;
+    border: 1px solid var(--ok-border);
+}
+
+.badge-critico,
+.badge.bg-danger {
+    background-color: #fee2e2 !important;
+    color: #991b1b !important;
+    border: 1px solid #fca5a5;
+    font-weight: 700;
+}
+
+/* Cabecera del Almacén en Inicio (Crema rosado con toldo rojo y crema) */
+.hero-tiacaro {
+    background-color: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--border-strong);
+    border-top: 6px solid var(--brand-red);
+    border-radius: 0.5rem;
+    padding: 2rem;
+}
+
+.toldo-stripes {
+    height: 10px;
+    background: repeating-linear-gradient(
+        90deg,
+        #b91c1c,
+        #b91c1c 28px,
+        #fae5e2 28px,
+        #fae5e2 56px
+    );
+    border-bottom: 1px solid var(--border-strong);
+}
+
+/* Inputs en crema suave */
+.form-control,
+.form-select {
+    background-color: #fffcfb;
+    border: 1px solid var(--border-strong);
+    border-radius: 0.4rem;
+    color: var(--ink);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: #ffffff;
+    border-color: var(--brand-red);
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.14);
+}
+
+.input-group-text {
+    background-color: var(--surface-subtle);
+    border-color: var(--border-strong);
+    color: var(--ink);
+}
+
+/* Validaciones visuales con colores y alertas */
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: #dc2626 !important;
+    border-width: 2px !important;
+    background-color: #fef2f2;
+}
+
+.form-control.is-valid,
+.form-select.is-valid {
+    border-color: #16a34a !important;
+    border-width: 2px !important;
+    background-color: #f0fdf4;
+}
+
+.invalid-feedback {
+    font-weight: 600;
+    color: #991b1b !important;
+    font-size: 0.9rem;
+    background: #fee2e2;
+    padding: 0.35rem 0.6rem;
+    border-radius: 0.35rem;
+    margin-top: 0.35rem;
+    border-left: 3px solid #b91c1c;
+}
+
+/* Pie de página en crema rosado */
+footer.footer-tiacaro {
+    margin-top: auto;
+    background-color: var(--surface-subtle);
+    color: var(--ink-secondary);
+    border-top: 2px solid var(--brand-red);
+    padding: 1.5rem 0;
+}

@@ -1,0 +1,327 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Buscar productos para la venta{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="mb-4">
+        <h1>Buscar productos</h1>
+        <p>Busca un producto del inventario para agregarlo a la venta actual.</p>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+
+            <form method="GET"
+                  action="{% url 'buscar_productos_carrito' %}"
+                  id="formBusqueda">
+
+                <div class="mb-3">
+
+                    <label for="busqueda" class="form-label">
+                        Nombre o descripción del producto
+                    </label>
+
+                    <input type="search"
+                           id="busqueda"
+                           name="q"
+                           class="form-control"
+                           value="{{ busqueda }}"
+                           placeholder="Ejemplo: leche, pan, arroz..."
+                           autocomplete="off"
+                           autofocus>
+
+                    <small class="text-muted">
+                        Los resultados aparecerán mientras escribes.
+                    </small>
+
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Buscar
+                </button>
+
+                <a href="{% url 'ver_carrito' %}"
+                   class="btn btn-secondary">
+                    Volver a la caja
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Token CSRF para los formularios creados mediante JavaScript -->
+    <form id="csrf-token-form" class="d-none">
+        {% csrf_token %}
+    </form>
+
+    <!-- RESULTADOS -->
+
+    <div class="card">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <strong>Resultados de búsqueda</strong>
+
+            <span id="contadorResultados" class="badge bg-secondary">
+                0 productos
+            </span>
+
+        </div>
+
+        <div class="card-body">
+
+            <div id="estadoBusqueda" class="text-muted">
+                Escribe para buscar productos.
+            </div>
+
+            <div class="table-responsive">
+
+                <table class="table table-striped align-middle"
+                       id="tablaResultados"
+                       style="display: none;">
+
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Stock disponible</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="resultadosProductos">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const buscador = document.getElementById('busqueda');
+    const formulario = document.getElementById('formBusqueda');
+
+    const tabla = document.getElementById('tablaResultados');
+    const cuerpoTabla = document.getElementById('resultadosProductos');
+
+    const estado = document.getElementById('estadoBusqueda');
+    const contador = document.getElementById('contadorResultados');
+
+    const tokenCSRF = document.querySelector(
+        '#csrf-token-form input[name="csrfmiddlewaretoken"]'
+    ).value;
+
+    const urlBusqueda = "{% url 'buscar_productos_carrito_ajax' %}";
+    const urlAgregar = "{% url 'agregar_al_carrito' 0 %}";
+
+    let temporizador = null;
+    let controlador = null;
+
+    function crearCelda(texto) {
+
+        const celda = document.createElement('td');
+        celda.textContent = texto;
+
+        return celda;
+    }
+
+    function mostrarEstado(mensaje) {
+
+        estado.textContent = mensaje;
+        estado.style.display = 'block';
+
+        tabla.style.display = 'none';
+        cuerpoTabla.replaceChildren();
+
+        contador.textContent = '0 productos';
+    }
+
+    function mostrarProductos(productos) {
+
+        cuerpoTabla.replaceChildren();
+
+        if (productos.length === 0) {
+            mostrarEstado('No se encontraron productos disponibles.');
+            return;
+        }
+
+        estado.style.display = 'none';
+        tabla.style.display = 'table';
+
+        contador.textContent =
+            productos.length + (
+                productos.length === 1 ? ' producto' : ' productos'
+            );
+
+        productos.forEach(function (producto) {
+
+            const fila = document.createElement('tr');
+
+            // Nombre y descripción
+            const celdaNombre = document.createElement('td');
+
+            const nombre = document.createElement('strong');
+            nombre.textContent = producto.nombre;
+
+            const descripcion = document.createElement('small');
+            descripcion.textContent =
+                producto.descripcion || 'Sin descripción';
+
+            descripcion.className = 'd-block text-muted';
+
+            celdaNombre.appendChild(nombre);
+            celdaNombre.appendChild(descripcion);
+
+            fila.appendChild(celdaNombre);
+
+            // Precio
+            fila.appendChild(
+                crearCelda('$' + producto.precio)
+            );
+
+            // Stock
+            fila.appendChild(
+                crearCelda(producto.stock + ' unidades')
+            );
+
+            // Botón agregar
+            const celdaAccion = document.createElement('td');
+
+            const formularioAgregar = document.createElement('form');
+
+            formularioAgregar.method = 'POST';
+
+            formularioAgregar.action = urlAgregar.replace(
+                '/0/',
+                '/' + producto.id + '/'
+            );
+
+            const csrf = document.createElement('input');
+
+            csrf.type = 'hidden';
+            csrf.name = 'csrfmiddlewaretoken';
+            csrf.value = tokenCSRF;
+
+            const boton = document.createElement('button');
+
+            boton.type = 'submit';
+            boton.className = 'btn btn-success';
+            boton.textContent = 'Agregar a la venta';
+
+            formularioAgregar.appendChild(csrf);
+            formularioAgregar.appendChild(boton);
+
+            celdaAccion.appendChild(formularioAgregar);
+
+            fila.appendChild(celdaAccion);
+
+            cuerpoTabla.appendChild(fila);
+
+        });
+
+    }
+
+    async function buscarProductos() {
+
+        const busqueda = buscador.value.trim();
+
+        if (!busqueda) {
+
+            if (controlador) {
+                controlador.abort();
+            }
+
+            mostrarEstado('Escribe para buscar productos.');
+            return;
+        }
+
+        if (controlador) {
+            controlador.abort();
+        }
+
+        controlador = new AbortController();
+
+        estado.textContent = 'Buscando productos...';
+        estado.style.display = 'block';
+
+        tabla.style.display = 'none';
+
+        try {
+
+            const respuesta = await fetch(
+                urlBusqueda + '?q=' + encodeURIComponent(busqueda),
+                {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    signal: controlador.signal
+                }
+            );
+
+            if (!respuesta.ok) {
+                throw new Error('No se pudo realizar la búsqueda.');
+            }
+
+            const datos = await respuesta.json();
+
+            mostrarProductos(datos.productos);
+
+        } catch (error) {
+
+            if (error.name !== 'AbortError') {
+                mostrarEstado('Ocurrió un error al buscar productos.');
+                console.error(error);
+            }
+
+        }
+
+    }
+
+    buscador.addEventListener('input', function () {
+
+        clearTimeout(temporizador);
+
+        temporizador = setTimeout(
+            buscarProductos,
+            200
+        );
+
+    });
+
+    // Evita recargar la página al pulsar Enter.
+    formulario.addEventListener('submit', function (evento) {
+
+        evento.preventDefault();
+
+        clearTimeout(temporizador);
+        buscarProductos();
+
+    });
+
+    // Permite mostrar resultados iniciales si la URL trae ?q=...
+    if (buscador.value.trim()) {
+        buscarProductos();
+    }
+
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,218 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Inicio{% endblock %} | Donde la Tía Caro</title>
+    <link href="{% static 'vendor/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+
+    <!-- Menú Principal Simple para Dueña y Cajero -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-tiacaro sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'inicio' %}">
+                <span class="brand-mark">TC</span>
+                <span>Donde la Tía Caro</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-1">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'inicio' %}active{% endif %}" href="{% url 'inicio' %}">
+                            Inicio
+                        </a>
+                    </li>
+
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'carrito' in request.path %}active{% endif %}" href="{% url 'ver_carrito' %}">
+                            Caja
+                        </a>
+                    </li>
+
+                    {% if user.is_staff or user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'productos' in request.path or 'ofertas' in request.path %}active{% endif %}" href="{% url 'producto_list' %}">
+                            Inventario
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'gastos' in request.path %}active{% endif %}" href="{% url 'gasto_list' %}">
+                            Gastos
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'finanzas' in request.path %}active{% endif %}" href="{% url 'resumen_financiero' %}">
+                            Balance
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'ventas' in request.path or 'boleta' in request.path %}active{% endif %}" href="{% url 'historial_boletas' %}">
+                            Boletas
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <!-- Controles simples de letra grande, contraste y sesión -->
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Tamaño de letra">
+                        <button type="button" class="btn btn-light fw-bold" onclick="setFontScale(1)" title="Letra normal">A</button>
+                        <button type="button" class="btn btn-light fw-bold" onclick="setFontScale(1.18)" title="Letra grande">A+</button>
+                        <button type="button" class="btn btn-light fw-bold" onclick="toggleContrast()" title="Alto contraste">
+                            <i class="bi bi-circle-half"></i>
+                        </button>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                        <span class="text-white small fw-semibold px-2">
+                            {% if user.is_superuser or user.is_staff %}Dueña ({{ user.username }}){% else %}Cajero ({{ user.username }}){% endif %}
+                        </span>
+                        <form method="POST" action="{% url 'logout' %}" class="m-0">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-light btn-sm">
+                                Salir
+                            </button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-light btn-sm fw-bold">
+                            Entrar
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="toldo-stripes"></div>
+
+    <!-- Mensajes de confirmación y alerta -->
+    <div class="container mt-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'error' %}alert-danger border-danger{% elif message.tags == 'success' %}alert-success border-success{% else %}alert-secondary{% endif %} alert-dismissible fade show d-flex align-items-center gap-2 fw-semibold" role="alert">
+                    {% if message.tags == 'error' %}
+                        <i class="bi bi-exclamation-circle-fill text-danger"></i>
+                    {% else %}
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                    {% endif %}
+                    <div>{{ message }}</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <main class="container my-4 flex-grow-1">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Pie de página limpio con datos de contacto y Condiciones de Uso -->
+    <footer class="footer-tiacaro mt-5">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 small">
+                <div>
+                    <strong class="text-dark">Almacén "Donde la Tía Caro"</strong> · Pasaje Los Aromos #452, Villa San Agustín, Talca
+                </div>
+                <div class="d-flex flex-wrap align-items-center gap-3">
+                    <span><i class="bi bi-telephone me-1"></i>+56 9 8452 3910 · contacto@dondelatiacaro.cl</span>
+                    <a href="{% url 'seguridad_ley21459' %}" class="text-dark fw-semibold text-decoration-underline">
+                        Condiciones de uso y seguridad (Ley N° 21.459)
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'vendor/bootstrap.bundle.min.js' %}"></script>
+    <script>
+        function setFontScale(scale) {
+            document.documentElement.style.setProperty('--font-scale', scale);
+            localStorage.setItem('tiacaro_font_scale', scale);
+        }
+        function toggleContrast() {
+            document.body.classList.toggle('high-contrast');
+            const active = document.body.classList.contains('high-contrast');
+            localStorage.setItem('tiacaro_high_contrast', active ? '1' : '0');
+        }
+        (function initAccessibility() {
+            const savedScale = localStorage.getItem('tiacaro_font_scale');
+            if (savedScale) document.documentElement.style.setProperty('--font-scale', savedScale);
+            if (localStorage.getItem('tiacaro_high_contrast') === '1') {
+                document.body.classList.add('high-contrast');
+            }
+        })();
+
+        // Validación en tiempo real con colores y mensajes de alerta
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('form input.form-control, form select.form-select, form textarea.form-control');
+            inputs.forEach(function(input) {
+                input.addEventListener('input', function() {
+                    validateFieldVisual(input);
+                });
+                input.addEventListener('blur', function() {
+                    validateFieldVisual(input);
+                });
+            });
+        });
+
+        function validateFieldVisual(input) {
+            if (input.type === 'hidden' || input.name === 'q' || input.name === 'codigo') return;
+            let feedback = input.parentElement.querySelector('.live-feedback');
+            if (!feedback) {
+                feedback = document.createElement('div');
+                feedback.className = 'live-feedback invalid-feedback';
+                input.parentElement.appendChild(feedback);
+            }
+            const val = input.value.trim();
+            let errorMsg = '';
+
+            if (input.hasAttribute('required') && !val) {
+                errorMsg = 'Complete este dato.';
+            } else if (input.type === 'number' && val !== '') {
+                const num = parseFloat(val);
+                const min = input.hasAttribute('min') ? parseFloat(input.getAttribute('min')) : null;
+                const max = input.hasAttribute('max') ? parseFloat(input.getAttribute('max')) : null;
+                if (isNaN(num)) {
+                    errorMsg = 'Ingrese un número válido.';
+                } else if (min !== null && num < min) {
+                    errorMsg = 'El valor mínimo es ' + min + '.';
+                } else if (max !== null && num > max) {
+                    errorMsg = 'El valor máximo es ' + max + '.';
+                }
+            } else if (input.name === 'nombre' && val.length > 0 && val.length < 2) {
+                errorMsg = 'Ingrese al menos 2 letras.';
+            } else if (input.name === 'motivo' && val.length > 0 && val.length < 3) {
+                errorMsg = 'Describa el gasto brevemente.';
+            }
+
+            if (errorMsg) {
+                input.classList.remove('is-valid');
+                input.classList.add('is-invalid');
+                feedback.textContent = errorMsg;
+                feedback.style.display = 'block';
+            } else if (val !== '') {
+                input.classList.remove('is-invalid');
+                input.classList.add('is-valid');
+                feedback.style.display = 'none';
+            } else {
+                input.classList.remove('is-invalid', 'is-valid');
+                feedback.style.display = 'none';
+            }
+        }
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
